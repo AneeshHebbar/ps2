@@ -2,62 +2,35 @@
 
 ## Team Information
 - **Team Name**: ByteForge
-- **Year**: 2nd year
+- **Year**: 2nd Year
 - **All-Female Team**: No
 
-## Architecture Overview
+---
 
-The Smart Delivery Dispatch System is a backend system that assigns delivery orders to agents in real time while managing priority, SLA deadlines, and agent workload.
+# Architecture Overview
 
-### Dispatch Strategy
+The Smart Delivery Dispatch System is a modular backend platform designed for intelligent real time delivery assignment and optimization. The architecture follows an event driven workflow where orders, agents, and routing information are continuously processed to support efficient dispatch decisions. Orders are maintained in a priority queue and assigned through a weighted scoring algorithm based on travel distance, SLA urgency, workload balance, order priority, agent availability, and delivery ratings.
 
-The system assigns orders using a scoring-based approach.
+The platform uses Floyd Warshall shortest path computation to estimate travel times between locations efficiently. Pending orders remain queued until agents become available, ensuring continuous scheduling without blocking execution. State transitions are centrally managed to maintain consistency between order status and agent workload during assignment and delivery completion.
 
-Each agent is scored based on:
-- Distance to delivery location
-- Remaining SLA time
-- Order priority
-- Current workload
-- Agent availability
-
-The agent with the best score gets assigned to the order.
-
-To avoid long waiting times, older pending orders receive higher priority over time.
+The architecture is divided into specialized modules for data loading, graph routing, assignment logic, state management, simulation handling, and performance analytics. The system supports SLA aware scheduling, workload fairness, batch delivery optimization, GPS aware tracking, and real time monitoring. Final operational metrics and delivery statistics are exported in structured JSON format for reporting, evaluation, and performance analysis purposes efficiently.
 
 ---
 
-### SLA and Capacity Handling
+# Core Modules
 
-- Every agent has a maximum delivery capacity.
-- High-priority and near-deadline orders are processed first.
-- Orders are managed using a priority queue for faster scheduling.
-
----
-
-### System Flow
-
-1. Load agents, orders, and road network data
-2. Build graph for route calculation
-3. Calculate shortest paths using Floyd-Warshall Algorithm
-4. Start simulation
-5. Score agents and assign deliveries
-6. Track delivery performance and SLA status
-7. Generate final report
+| Module | Purpose |
+|---|---|
+| `loaders.py` | Load and validate CSV data |
+| `graph.py` | Route and shortest-path calculations |
+| `assignment.py` | Assignment scoring and dispatch |
+| `state.py` | Manage order and agent states |
+| `simulator.py` | Event-driven simulation engine |
+| `metrics.py` | SLA and performance analytics |
 
 ---
 
-### Core Modules
-
-- `loaders.py` → Loads and validates data
-- `graph.py` → Route and distance calculations
-- `assignment.py` → Agent scoring and assignment
-- `state.py` → Stores active system state
-- `simulator.py` → Runs event-driven simulation
-- `metrics.py` → Calculates performance metrics
-
----
-
-### Technologies Used
+# Technologies Used
 
 - Python 3.10+
 - Pandas
@@ -66,23 +39,26 @@ To avoid long waiting times, older pending orders receive higher priority over t
 
 ---
 
-### Key Features
+# Key Features
 
-- Real-time order assignment
-- SLA-aware dispatching
+- Real-time dispatching
+- SLA-aware scheduling
 - Workload balancing
-- Priority-based scheduling
+- Priority-based assignment
 - Route optimization
-- Event-driven simulation
+- Batch delivery support
+- GPS-aware tracking
+- JSON performance reports
 
 ---
 
-### Output Metrics
+# Output Metrics
 
 The system tracks:
-- SLA success rate
+- SLA compliance rate
 - Average delivery time
 - Agent utilization
 - Pending and failed orders
+- Workload fairness statistics
 
-Reports are generated in JSON format for evaluation.
+Reports are exported in JSON format.
