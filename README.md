@@ -16,6 +16,19 @@ The platform uses Floyd Warshall shortest path computation to estimate travel ti
 The architecture is divided into specialized modules for data loading, graph routing, assignment logic, state management, simulation handling, and performance analytics. The system supports SLA aware scheduling, workload fairness, batch delivery optimization, GPS aware tracking, and real time monitoring. Final operational metrics and delivery statistics are exported in structured JSON format for reporting, evaluation, and performance analysis purposes efficiently.
 
 ---
+# System Workflow
+
+1. Load orders, agents, and environment graph data from CSV files.
+2. Validate records and remove invalid entries.
+3. Build the routing graph and compute shortest paths.
+4. Insert incoming orders into the priority queue.
+5. Generate feasible delivery agent candidates.
+6. Score candidates using distance, SLA urgency, workload, availability, and ratings.
+7. Assign the best agent to the order.
+8. Update order and agent states in real time.
+9. Simulate delivery completion and SLA tracking.
+10. Calculate metrics and export final reports in JSON format.
+---
 
 # Core Modules
 
