@@ -1,0 +1,8 @@
+constraint,value
+max_active_orders_per_agent,2
+decision_latency_target_seconds,5
+default_sla_minutes,50
+priority_weight_high,1.5
+priority_weight_normal,1.0
+priority_weight_low,0.8
+
